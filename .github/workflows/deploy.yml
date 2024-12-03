@@ -10,11 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-    
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -34,7 +29,7 @@ jobs:
           --runtime python3.9 \
           --handler lambda_function.lambda_handler \
           --role ${{ secrets.AWS_LAMBDA_ROLE }} \
-          --zip-file fileb://lambda_function.zip \
-          || aws lambda update-function-code \
-             --function-name hello-world-lambda \
-             --zip-file fileb://lambda_function.zip
+          --zip-file fileb://lambda_function.zip || \
+        aws lambda update-function-code \
+          --function-name hello-world-lambda \
+          --zip-file fileb://lambda_function.zip
